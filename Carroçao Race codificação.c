@@ -1,12 +1,19 @@
 #include<stdio.h>
 #include<time.h>
+#include<unistd.h>
 #include<stdlib.h>
 #include<windows.h>
+#include<conio.h>
+#include"wsol.h"
 
 #define COLUNA 11
-#define LINHA 15
+#define LINHA 22
 #define HORIZOTE 90
-#define VERTICAL 25
+#define VERTICAL 26
+#define BORDAJ 22
+
+static char pista[LINHA][COLUNA];
+static int mover = 0, lado, cimaBaixo, contador = 0;
 
 void gotoxy(int x, int y){
 
@@ -28,7 +35,7 @@ void tela(){
             if(i == 0){
 
                 gotoxy(j, i);
-                printf("%c",220);
+                printf("%c",219);
 
             }else if(j == 0){
 
@@ -43,7 +50,7 @@ void tela(){
             }else if(i == VERTICAL - 1){
 
                 gotoxy(j, i);
-                printf("%c",220);
+                printf("%c",219);
 
             }else{
 
@@ -81,38 +88,32 @@ int menu(){ // MENU Inicial
     return opcao;
 }
 
-static char pista[LINHA][COLUNA];
-static int mover = 0, lado, cimaBaixo = 0, contador = 0;
+void movimentacao(){
 
-void movimentacao()
-{
-	mover = getch();
-	if(mover == 119){ //W
+    if(kbhit()){
 
-        if(cimaBaixo != LINHA - 4){
+        mover = getch();
+        if(mover == 119){ //W
+
+            if(cimaBaixo != LINHA - 4){
+
             ++cimaBaixo;
-            void carregaPista();
-        }
-	}
-	else if(mover == 97){ //A
+            }
+        }else if(mover == 97){ //A
 
-        if(lado != -4){
+            if(lado != -4){
             --lado;
-            void carregaPista();
-        }
-	}
-	else if(mover == 115){ // S
+            }
+        }else if(mover == 115){ // S
 
-        if(cimaBaixo != 0){
+            if(cimaBaixo != 0){
             --cimaBaixo;
-            void carregaPista();
-        }
-	}
-	else if(mover == 100){ //D
+            }
+        }else if(mover == 100){ //D
 
 			if(lado != COLUNA - 7){
             ++lado;
-            void carregaPista();
+            }
         }
     }
 }
@@ -121,9 +122,9 @@ void carregaPista(){
 
     int i, j;
 
-    for(i = 0; i < LINHA; i++){
-        for(j = 0; j < COLUNA; j++){pista[i][j] = ' ';}
-    }
+    for(i = 0; i < LINHA; i++)
+        for(j = 0; j < COLUNA; j++) pista[i][j] = ' ';
+
 }
 
 void carroUsuario(){
@@ -155,6 +156,16 @@ void oponente2(){
     pista[-3 + contador][6] = 219;
 }
 
+void oponente3(){
+
+    pista[-4 + contador][9] = 219;
+    pista[-1 + contador][8] = 219;
+    pista[-1 + contador][10] = 219;
+    pista[-2 + contador][9] = 219;
+    pista[-3 + contador][8] = 219;
+    pista[-3 + contador][10] = 219;
+}
+
 void imprime(){
 
     int i, j;
@@ -162,6 +173,8 @@ void imprime(){
     for(i = 0; i < LINHA; i++){
         for(j = 0; j < COLUNA; j++){
 
+            gotoxy(j + 36,i + 3);
+            wsol_fontcolor(WSOL_BLACK,8);
             printf("%c",pista[i][j]);
         }
         puts(" ");
@@ -176,8 +189,6 @@ void placar(){ // PLACAR a ideia é usar arquivo STTS Zero
 void instrucao(){ // Como jogar!!! *** OK ***
 
     int opcao;
-
-    tela();
 
     gotoxy(0,8);
 
@@ -194,13 +205,55 @@ void instrucao(){ // Como jogar!!! *** OK ***
     return opcao;
 }
 
+void borda(){
+
+    int i, j;
+    char beira[24][BORDAJ];
+
+    for(i = 0; i < 23; i++){
+        for(j = 0; j < BORDAJ; j++){
+            if(j == 0 || j == 1 || j == 2 || j == BORDAJ - 1 || j == BORDAJ - 2 || j == BORDAJ - 3){beira[i][j] = 219;
+            }else{beira[i][j] = '     ';}
+        }
+    }
+
+    for(i = 0; i < 23; i++){
+        for(j = 0; j < BORDAJ; j++){
+
+            gotoxy(j + 30,i + 2);
+            if(j == 0 || j == BORDAJ - 1){
+                if(i % 2 == 0){
+
+                    wsol_fontcolor(WSOL_BLUE,WSOL_BLACK);
+                    printf("%c",beira[i][j]);
+
+                }else{
+
+                    wsol_fontcolor(WSOL_RED,WSOL_BLACK);
+                    printf("%c",beira[i][j]);
+                }
+            }else if(j == 0 || j == 1 || j == 2 || j == BORDAJ - 1 || j == BORDAJ - 2 || j == BORDAJ - 3){
+
+                wsol_fontcolor(WSOL_GREEN,WSOL_BLACK);
+                printf("%c",beira[i][j]);
+
+            }else{
+
+                wsol_fontcolor(WSOL_BLACK,8);
+                printf("%c",beira[i][j]);
+            }
+        }
+        puts(" ");
+    }
+
+}
+
 void load(){
 
     int i;
 
     for(i = 0; i < 10; i++){
 
-        sleep(1);
         printf("%c",219);
     }
 }
@@ -217,7 +270,6 @@ void carregando(){ //
     tela();
 
     gotoxy(30,12);
-    sleep(1);
     printf("CARREGANDO ");
     load();
 }
@@ -226,18 +278,21 @@ int main(){
 
     int i;
 
+    tela();
+    borda();
+
     for(i = 1; i != 0; i++){
 
-        system("cls");
         carregaPista();
         oponente1();
         oponente2();
+        oponente3();
         carroUsuario();
         imprime();
         movimentacao();
-        if(contador != 16){contador++;
+        if(contador != 22){contador++;
         }else{contador = 0;}
-
     }
+
     return 0;
 }
