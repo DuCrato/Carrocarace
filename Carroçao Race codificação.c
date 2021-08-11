@@ -13,7 +13,7 @@
 #define BORDAJ 23
 
 static char pista[LINHA][COLUNA];
-static int mover = 0, lado, cimaBaixo, contador = 0;
+static int mover, lado, cimaBaixo, contador = 0, pontuacao = 0;
 
 void gotoxy(int x, int y){
 
@@ -89,6 +89,67 @@ int menu(){ // MENU Inicial
     return opcao;
 }
 
+void ponto(){
+
+    pontuacao++;
+
+    gotoxy(8,5);
+    wsol_fontcolor(WSOL_WHITE,WSOL_BLACK);
+    printf("Pontua%c%co: %d",135, 198, pontuacao);
+}
+
+void placar(){
+
+    FILE *placar;
+    placar = fopen("Placar.txt","w");
+    fprintf(placar, "20 30 40");
+    fclose(placar);
+}
+
+void lerPlacar(){
+
+    int i, j, valor, valorfor;
+
+    FILE *placar;
+    placar = fopen("placar.txt", "r");
+
+    fscanf(placar,"%d %d",&valor, &valorfor);
+
+    int matriz[valorfor][2];
+
+    for(i = 1; i < valorfor; i++)
+        for(j = 0; j < 2; j++)fscanf(placar,"%d",&matriz[i][j]);
+
+    ordenar(matriz, valorfor);
+
+    for(i = 1; i != valorfor; i++){
+        for(j = 0; j < 2; j++){
+
+            printf("%d ",matriz[i][j]);
+        }
+        puts("");
+    }
+}
+
+void ordenar(int matriz[][2], int cont){
+
+    int i, j, aux, help;
+
+    for(i = 1; i < cont; i++){
+
+        for(j = 1 + i - 1; j < cont; j++){
+             if(aux < matriz [j][1]){
+
+                aux = matriz[j][1];
+                help = j;
+            }
+        }
+        matriz[help][1] = matriz[i][1];
+        matriz[i][1] = aux;
+        aux = 0;
+    }
+}
+
 void movimentacao(){
 
         mover = getch();
@@ -142,11 +203,11 @@ void oponente2(){
 
 void oponente3(){
 
-    pista[0 + contador][9] = 219;
-    pista[1 + contador][8] = 219;
+    pista[0 + contador][9]  = 219;
+    pista[1 + contador][8]  = 219;
     pista[1 + contador][10] = 219;
-    pista[2 + contador][9] = 219;
-    pista[3 + contador][8] = 219;
+    pista[2 + contador][9]  = 219;
+    pista[3 + contador][8]  = 219;
     pista[3 + contador][10] = 219;
 }
 
@@ -154,13 +215,13 @@ int colisao(){
 
     int i, j;
 
-     for(i = 10; i < LINHA - 6; i++){
+    for(i = 10; i < LINHA - 6; i++){
         for(j = 0; j < COLUNA; j++){
-            if(pista[i][j] == 219){
-                printf("OII LINDO");
-            }
+
+            printf("%c",pista[i][j]);
         }
-     }
+        puts(" ");
+    }
 }
 
 void carregaPista(){
@@ -180,16 +241,11 @@ void imprime(){
         for(j = 0; j < COLUNA; j++){
 
             gotoxy(j + 36, (i - 10) + 1);
-            wsol_fontcolor(WSOL_BLACK,8);
+            wsol_fontcolor(0,8);
             printf("%c",pista[i][j]);
         }
         puts(" ");
     }
-}
-
-void placar(){ // PLACAR a ideia é usar arquivo STTS Zero
-
-    printf("\n\n\tPLACAR EM CONSTRUCAO\n\n");
 }
 
 void instrucao(){ // Como jogar!!! *** OK ***
@@ -295,7 +351,8 @@ int main(){
         oponente3();
         carroUsuario();
         imprime();
-        colisao();
+        ponto();
+        //colisao();
         movimentacao();
 
         if(contador != 35){contador++;
