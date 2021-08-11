@@ -107,7 +107,7 @@ void movimentacao(){
 
         }else if(mover == 100){ //D
 
-			if(lado != COLUNA - 7)++lado;
+            if(lado != COLUNA - 7)++lado;
         }
 }
 
@@ -152,11 +152,15 @@ void oponente3(){
 
 int colisao(){
 
-    int i, j, resultado = -2;
+    int i, j;
 
-     printf("Oi lindo");
-
-    return resultado;
+     for(i = 10; i < LINHA - 6; i++){
+        for(j = 0; j < COLUNA; j++){
+            if(pista[i][j] == 219){
+                printf("OII LINDO");
+            }
+        }
+     }
 }
 
 void carregaPista(){
@@ -226,7 +230,7 @@ void borda(){
             if(j == 0 || j == BORDAJ - 1){
                 if(i % 2 == 0){
 
-                    wsol_fontcolor(WSOL_BLUE,WSOL_BLACK);
+                    wsol_fontcolor(WSOL_WHITE,WSOL_BLACK);
                     printf("%c",beira[i][j]);
 
                 }else{
@@ -291,8 +295,8 @@ int main(){
         oponente3();
         carroUsuario();
         imprime();
-        movimentacao();
         colisao();
+        movimentacao();
 
         if(contador != 35){contador++;
         }else{contador = 0;}
