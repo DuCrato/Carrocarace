@@ -1,19 +1,17 @@
 #include<stdio.h>
-#include<time.h>
-#include<unistd.h>
 #include<stdlib.h>
-#include<windows.h>
-#include<conio.h>
+#include<time.h>
 #include"wsol.h"
 
 #define COLUNA 11
-#define LINHA 40
+#define LINHA 100
 #define HORIZOTE 90
 #define VERTICAL 26
 #define BORDAJ 23
 
 static char pista[LINHA][COLUNA];
-static int mover, lado, cimaBaixo, contador = 0, pontuacao = 0;
+static int mover, lado, cimaBaixo, ladeira = 0, ladeira2 = 0, ladeira3 = 0, ladeira4 = 0, pontuacao = 0;
+static int ale1 , ale2, ale3, ale4, ale5, ale6, ale7, ale8;
 
 void gotoxy(int x, int y){
 
@@ -22,7 +20,6 @@ void gotoxy(int x, int y){
     coord.Y = y;
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
 }
-
 void tela(){
 
     int i, j;
@@ -61,8 +58,7 @@ void tela(){
         puts("");
     }
 }
-
-int menu(){ // MENU Inicial
+int menu(){
 
     int opcao;
 
@@ -88,16 +84,14 @@ int menu(){ // MENU Inicial
 
     return opcao;
 }
-
 void ponto(){
 
     pontuacao++;
 
-    gotoxy(8,5);
+    gotoxy(8,13);
     wsol_fontcolor(WSOL_WHITE,WSOL_BLACK);
     printf("Pontua%c%co: %d",135, 198, pontuacao);
 }
-
 void placar(){
 
     FILE *placar;
@@ -105,7 +99,6 @@ void placar(){
     fprintf(placar, "20 30 40");
     fclose(placar);
 }
-
 void lerPlacar(){
 
     int i, j, valor, valorfor;
@@ -130,7 +123,6 @@ void lerPlacar(){
         puts("");
     }
 }
-
 void ordenar(int matriz[][2], int cont){
 
     int i, j, aux, help;
@@ -149,68 +141,257 @@ void ordenar(int matriz[][2], int cont){
         aux = 0;
     }
 }
-
 void movimentacao(){
 
-        mover = getch();
+    if(kbhit()){
+    }
+
+     mover = getch();
 
         if(mover == 119){ //W
 
-            if(cimaBaixo != LINHA - 20) ++cimaBaixo;
+            if(cimaBaixo != 20) cimaBaixo += 2;
 
         }else if(mover == 97){ //A
 
-            if(lado != -4) --lado;
+            if(lado != -4) lado -= 2;
 
         }else if(mover == 115){ // S
 
-            if(cimaBaixo != 0) --cimaBaixo;
+            if(cimaBaixo != 0) cimaBaixo -= 2;
 
         }else if(mover == 100){ //D
 
-            if(lado != COLUNA - 7)++lado;
+            if(lado != COLUNA - 7) lado += 2;
         }
 }
-
 void carroUsuario(){
 
-    pista[LINHA - 7  - cimaBaixo][4 + lado] = 219;
-    pista[LINHA - 7  - cimaBaixo][6 + lado] = 219;
-    pista[LINHA - 8  - cimaBaixo][5 + lado] = 219;
-    pista[LINHA - 9  - cimaBaixo][4 + lado] = 219;
-    pista[LINHA - 9  - cimaBaixo][6 + lado] = 219;
-    pista[LINHA - 10 - cimaBaixo][5 + lado] = 219;
+    pista[65 - cimaBaixo][4 + lado] = 219;
+    pista[65 - cimaBaixo][6 + lado] = 219;
+    pista[64 - cimaBaixo][5 + lado] = 219;
+    pista[63 - cimaBaixo][4 + lado] = 219;
+    pista[63 - cimaBaixo][6 + lado] = 219;
+    pista[62 - cimaBaixo][5 + lado] = 219;
 }
-
 void oponente1(){
 
-    pista[0 + contador][1] = 219;
-    pista[1 + contador][0] = 219;
-    pista[1 + contador][2] = 219;
-    pista[2 + contador][1] = 219;
-    pista[3 + contador][0] = 219;
-    pista[3 + contador][2] = 219;
+    pista[0 + ladeira][1] = 219;
+    pista[1 + ladeira][0] = 219;
+    pista[1 + ladeira][2] = 219;
+    pista[2 + ladeira][1] = 219;
+    pista[3 + ladeira][0] = 219;
+    pista[3 + ladeira][2] = 219;
+
 }
 void oponente2(){
 
-    pista[0 + contador][5] = 219;
-    pista[1 + contador][4] = 219;
-    pista[1 + contador][6] = 219;
-    pista[2 + contador][5] = 219;
-    pista[3 + contador][4] = 219;
-    pista[3 + contador][6] = 219;
+    pista[0 + ladeira][5] = 219;
+    pista[1 + ladeira][4] = 219;
+    pista[1 + ladeira][6] = 219;
+    pista[2 + ladeira][5] = 219;
+    pista[3 + ladeira][4] = 219;
+    pista[3 + ladeira][6] = 219;
 }
-
 void oponente3(){
 
-    pista[0 + contador][9]  = 219;
-    pista[1 + contador][8]  = 219;
-    pista[1 + contador][10] = 219;
-    pista[2 + contador][9]  = 219;
-    pista[3 + contador][8]  = 219;
-    pista[3 + contador][10] = 219;
+    pista[0 + ladeira][9]  = 219;
+    pista[1 + ladeira][8]  = 219;
+    pista[1 + ladeira][10] = 219;
+    pista[2 + ladeira][9]  = 219;
+    pista[3 + ladeira][8]  = 219;
+    pista[3 + ladeira][10] = 219;
 }
+void oponente4(){
 
+    pista[13 + ladeira2][1] = 97;
+    pista[14 + ladeira2][0] = 97;
+    pista[14 + ladeira2][2] = 97;
+    pista[15 + ladeira2][1] = 97;
+    pista[16 + ladeira2][0] = 97;
+    pista[16 + ladeira2][2] = 97;
+
+}
+void oponente5(){
+
+    pista[13 + ladeira2][5] = 97;
+    pista[14 + ladeira2][4] = 97;
+    pista[14 + ladeira2][6] = 97;
+    pista[15 + ladeira2][5] = 97;
+    pista[16 + ladeira2][4] = 97;
+    pista[16 + ladeira2][6] = 97;
+}
+void oponente6(){
+
+    pista[13 + ladeira2][9]  = 97;
+    pista[14 + ladeira2][8]  = 97;
+    pista[14 + ladeira2][10] = 97;
+    pista[15 + ladeira2][9]  = 97;
+    pista[16 + ladeira2][8]  = 97;
+    pista[16 + ladeira2][10] = 97;
+}
+void oponente7(){
+
+    pista[26 + ladeira3][1] = 219;
+    pista[27 + ladeira3][0] = 219;
+    pista[27 + ladeira3][2] = 219;
+    pista[28 + ladeira3][1] = 219;
+    pista[29 + ladeira3][0] = 219;
+    pista[29 + ladeira3][2] = 219;
+
+}
+void oponente8(){
+
+    pista[26 + ladeira3][5] = 219;
+    pista[27 + ladeira3][4] = 219;
+    pista[27 + ladeira3][6] = 219;
+    pista[28 + ladeira3][5] = 219;
+    pista[29 + ladeira3][4] = 219;
+    pista[29 + ladeira3][6] = 219;
+}
+void oponente9(){
+
+    pista[26 + ladeira3][9]  = 219;
+    pista[27 + ladeira3][8]  = 219;
+    pista[27 + ladeira3][10] = 219;
+    pista[28 + ladeira3][9]  = 219;
+    pista[29 + ladeira3][8]  = 219;
+    pista[29 + ladeira3][10] = 219;
+}
+void oponente10(){
+
+    pista[39 + ladeira4][1] = 219;
+    pista[40 + ladeira4][0] = 219;
+    pista[40 + ladeira4][2] = 219;
+    pista[41 + ladeira4][1] = 219;
+    pista[42 + ladeira4][0] = 219;
+    pista[42 + ladeira4][2] = 219;
+
+}
+void oponente11(){
+
+    pista[39 + ladeira4][5] = 219;
+    pista[40 + ladeira4][4] = 219;
+    pista[40 + ladeira4][6] = 219;
+    pista[41 + ladeira4][5] = 219;
+    pista[42 + ladeira4][4] = 219;
+    pista[42 + ladeira4][6] = 219;
+}
+void oponente12(){
+
+    pista[39 + ladeira4][9]  = 219;
+    pista[40 + ladeira4][8]  = 219;
+    pista[40 + ladeira4][10] = 219;
+    pista[41 + ladeira4][9]  = 219;
+    pista[42 + ladeira4][8]  = 219;
+    pista[42 + ladeira4][10] = 219;
+}
+void carroAleatorio1(){
+
+    int i;
+
+    srand(time(NULL));
+
+        for(i = 1; i != 0; i++){
+
+            ale1 = rand() % 3;
+            ale2 = rand() % 3;
+
+            if(ale1 != ale2) break;
+        }
+
+        gotoxy(8,10);
+        printf("Ale1 = %d Ale2 = %d",ale1, ale2);
+}
+void carroAleatorio2(){
+
+    int i;
+
+        for(i = 1; i != 0; i++){
+
+            ale3 = rand() % 3;
+            ale4 = rand() % 3;
+
+            if(ale3 != ale4) break;
+        }
+
+        gotoxy(8,11);
+        printf("Ale3 = %d Ale4 = %d",ale3, ale4);
+}
+void carroAleatorio3(){
+
+    int i;
+
+    srand(time(NULL));
+
+        for(i = 1; i != 0; i++){
+
+            ale5 = rand() % 3;
+            ale6 = rand() % 3;
+
+            if(ale5 != ale6) break;
+        }
+
+        gotoxy(8,12);
+        printf("Ale5 = %d Ale6 = %d",ale5, ale6);
+}
+void carroAleatorio4(){
+
+    int i;
+
+    srand(time(NULL));
+
+        for(i = 1; i != 0; i++){
+
+            ale7 = rand() % 3;
+            ale8 = rand() % 3;
+
+            if(ale7 != ale8) break;
+        }
+
+        gotoxy(8,13);
+        printf("Ale7 = %d Ale8 = %d",ale7, ale8);
+}
+void imprimeOponente1(){
+
+    if(ale1 == 0){oponente1();
+    }else if(ale1 == 1){oponente2();
+    }else{oponente3();}
+
+    if(ale2 == 0){oponente1();
+    }else if(ale2 == 1){oponente2();
+    }else{oponente3();}
+}
+void imprimeOponente2(){
+
+    if(ale3 == 0){oponente4();
+    }else if(ale3 == 1){oponente5();
+    }else{oponente6();}
+
+    if(ale4 == 0){oponente4();
+    }else if(ale4 == 1){oponente5();
+    }else{oponente6();}
+}
+void imprimeOponente3(){
+
+    if(ale5 == 0){oponente7();
+    }else if(ale5 == 1){oponente8();
+    }else{oponente9();}
+
+    if(ale6 == 0){oponente7();
+    }else if(ale6 == 1){oponente8();
+    }else{oponente9();}
+}
+void imprimeOponente4(){
+
+    if(ale5 == 0){oponente10();
+    }else if(ale5 == 1){oponente11();
+    }else{oponente12();}
+
+    if(ale6 == 0){oponente10();
+    }else if(ale6 == 1){oponente11();
+    }else{oponente12();}
+}
 int colisao(){
 
     int i, j;
@@ -223,7 +404,6 @@ int colisao(){
         puts(" ");
     }
 }
-
 void carregaPista(){
 
     int i, j;
@@ -232,23 +412,21 @@ void carregaPista(){
         for(j = 0; j < COLUNA; j++) pista[i][j] = ' ';
 
 }
-
 void imprime(){
 
     int i, j;
 
-    for(i = 10; i < LINHA - 6; i++){
+    for(i = 42; i < 66; i++){
         for(j = 0; j < COLUNA; j++){
 
-            gotoxy(j + 36, (i - 10) + 1);
+            gotoxy(j + 36, (i - 42) + 1);
             wsol_fontcolor(0,8);
             printf("%c",pista[i][j]);
         }
         puts(" ");
     }
 }
-
-void instrucao(){ // Como jogar!!! *** OK ***
+void instrucao(){
 
     int opcao;
 
@@ -266,7 +444,6 @@ void instrucao(){ // Como jogar!!! *** OK ***
 
     return opcao;
 }
-
 void borda(){
 
     int i, j;
@@ -278,6 +455,11 @@ void borda(){
             }else{beira[i][j] = ' ';}
         }
     }
+    imprimiBorda(beira);
+}
+void imprimiBorda(char beira[][BORDAJ]){
+
+    int i, j;
 
     for(i = 0; i < 24; i++){
         for(j = 0; j < BORDAJ; j++){
@@ -309,7 +491,6 @@ void borda(){
     }
 
 }
-
 void load(){
 
     int i;
@@ -346,17 +527,30 @@ int main(){
     for(i = 1; i != 0; i++){
 
         carregaPista();
-        oponente1();
-        oponente2();
-        oponente3();
+        if(ladeira == 0) carroAleatorio1();
+        if(ladeira2 == 0) carroAleatorio2();
+        if(ladeira3 == 0) carroAleatorio3();
+        if(ladeira4 == 0) carroAleatorio3();
+        imprimeOponente1();
+        imprimeOponente2();
+        imprimeOponente3();
+        imprimeOponente4();
         carroUsuario();
         imprime();
         ponto();
-        //colisao();
         movimentacao();
 
-        if(contador != 35){contador++;
-        }else{contador = 0;}
+        if(ladeira != 53){ladeira++;
+        }else{ladeira = 0;}
+
+        if(ladeira2 != 53){ladeira2++;
+        }else{ladeira2 = 0;}
+
+        if(ladeira3 != 43){ladeira3++;
+        }else{ladeira3 = 0;}
+
+        if(ladeira4 != 43){ladeira4++;
+        }else{ladeira4 = 0;}
     }
 
     return 0;
