@@ -4,7 +4,7 @@
 #include"wsol.h"
 
 #define COLUNA 11
-#define LINHA 100
+#define LINHA 120
 #define HORIZOTE 90
 #define VERTICAL 26
 #define BORDAJ 23
@@ -144,9 +144,8 @@ void ordenar(int matriz[][2], int cont){
 void movimentacao(){
 
     if(kbhit()){
-    }
 
-     mover = getch();
+        mover = getch();
 
         if(mover == 119){ //W
 
@@ -164,6 +163,7 @@ void movimentacao(){
 
             if(lado != COLUNA - 7) lado += 2;
         }
+    }
 }
 void carroUsuario(){
 
@@ -204,31 +204,31 @@ void oponente3(){
 }
 void oponente4(){
 
-    pista[13 + ladeira2][1] = 97;
-    pista[14 + ladeira2][0] = 97;
-    pista[14 + ladeira2][2] = 97;
-    pista[15 + ladeira2][1] = 97;
-    pista[16 + ladeira2][0] = 97;
-    pista[16 + ladeira2][2] = 97;
+    pista[13 + ladeira2][1] = 219;
+    pista[14 + ladeira2][0] = 219;
+    pista[14 + ladeira2][2] = 219;
+    pista[15 + ladeira2][1] = 219;
+    pista[16 + ladeira2][0] = 219;
+    pista[16 + ladeira2][2] = 219;
 
 }
 void oponente5(){
 
-    pista[13 + ladeira2][5] = 97;
-    pista[14 + ladeira2][4] = 97;
-    pista[14 + ladeira2][6] = 97;
-    pista[15 + ladeira2][5] = 97;
-    pista[16 + ladeira2][4] = 97;
-    pista[16 + ladeira2][6] = 97;
+    pista[13 + ladeira2][5] = 219;
+    pista[14 + ladeira2][4] = 219;
+    pista[14 + ladeira2][6] = 219;
+    pista[15 + ladeira2][5] = 219;
+    pista[16 + ladeira2][4] = 219;
+    pista[16 + ladeira2][6] = 219;
 }
 void oponente6(){
 
-    pista[13 + ladeira2][9]  = 97;
-    pista[14 + ladeira2][8]  = 97;
-    pista[14 + ladeira2][10] = 97;
-    pista[15 + ladeira2][9]  = 97;
-    pista[16 + ladeira2][8]  = 97;
-    pista[16 + ladeira2][10] = 97;
+    pista[13 + ladeira2][9]  = 219;
+    pista[14 + ladeira2][8]  = 219;
+    pista[14 + ladeira2][10] = 219;
+    pista[15 + ladeira2][9]  = 219;
+    pista[16 + ladeira2][8]  = 219;
+    pista[16 + ladeira2][10] = 219;
 }
 void oponente7(){
 
@@ -292,31 +292,25 @@ void carroAleatorio1(){
 
     srand(time(NULL));
 
-        for(i = 1; i != 0; i++){
+    for(i = 1; i != 0; i++){
 
-            ale1 = rand() % 3;
-            ale2 = rand() % 3;
+        ale1 = rand() % 3;
+        ale2 = rand() % 3;
 
-            if(ale1 != ale2) break;
-        }
-
-        gotoxy(8,10);
-        printf("Ale1 = %d Ale2 = %d",ale1, ale2);
+        if(ale1 != ale2) break;
+    }
 }
 void carroAleatorio2(){
 
     int i;
 
-        for(i = 1; i != 0; i++){
+    for(i = 1; i != 0; i++){
 
-            ale3 = rand() % 3;
-            ale4 = rand() % 3;
+        ale3 = rand() % 3;
+        ale4 = rand() % 3;
 
-            if(ale3 != ale4) break;
-        }
-
-        gotoxy(8,11);
-        printf("Ale3 = %d Ale4 = %d",ale3, ale4);
+        if(ale3 != ale4) break;
+    }
 }
 void carroAleatorio3(){
 
@@ -324,16 +318,13 @@ void carroAleatorio3(){
 
     srand(time(NULL));
 
-        for(i = 1; i != 0; i++){
+    for(i = 1; i != 0; i++){
 
-            ale5 = rand() % 3;
-            ale6 = rand() % 3;
+        ale5 = rand() % 3;
+        ale6 = rand() % 3;
 
-            if(ale5 != ale6) break;
-        }
-
-        gotoxy(8,12);
-        printf("Ale5 = %d Ale6 = %d",ale5, ale6);
+        if(ale5 != ale6) break;
+    }
 }
 void carroAleatorio4(){
 
@@ -341,16 +332,13 @@ void carroAleatorio4(){
 
     srand(time(NULL));
 
-        for(i = 1; i != 0; i++){
+    for(i = 1; i != 0; i++){
 
-            ale7 = rand() % 3;
-            ale8 = rand() % 3;
+        ale7 = rand() % 3;
+        ale8 = rand() % 3;
 
-            if(ale7 != ale8) break;
-        }
-
-        gotoxy(8,13);
-        printf("Ale7 = %d Ale8 = %d",ale7, ale8);
+        if(ale7 != ale8) break;
+    }
 }
 void imprimeOponente1(){
 
@@ -526,11 +514,12 @@ int main(){
 
     for(i = 1; i != 0; i++){
 
+        Sleep(20);
         carregaPista();
         if(ladeira == 0) carroAleatorio1();
         if(ladeira2 == 0) carroAleatorio2();
         if(ladeira3 == 0) carroAleatorio3();
-        if(ladeira4 == 0) carroAleatorio3();
+        if(ladeira4 == 0) carroAleatorio4();
         imprimeOponente1();
         imprimeOponente2();
         imprimeOponente3();
@@ -540,16 +529,16 @@ int main(){
         ponto();
         movimentacao();
 
-        if(ladeira != 53){ladeira++;
+        if(ladeira != 63){ladeira++;
         }else{ladeira = 0;}
 
-        if(ladeira2 != 53){ladeira2++;
+        if(ladeira2 != 63){ladeira2++;
         }else{ladeira2 = 0;}
 
-        if(ladeira3 != 43){ladeira3++;
+        if(ladeira3 != 63){ladeira3++;
         }else{ladeira3 = 0;}
 
-        if(ladeira4 != 43){ladeira4++;
+        if(ladeira4 != 63){ladeira4++;
         }else{ladeira4 = 0;}
     }
 
