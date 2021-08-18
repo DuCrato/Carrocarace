@@ -8,10 +8,12 @@
 #define HORIZOTE 90
 #define VERTICAL 26
 #define BORDAJ 23
+#define USUARIO 219
+#define OPONENTE 178
 
-static char pista[LINHA][COLUNA];
-static int mover, lado, cimaBaixo, ladeira = 0, ladeira2 = 0, ladeira3 = 0, ladeira4 = 0, pontuacao = 0;
-static int ale1 , ale2, ale3, ale4, ale5, ale6, ale7, ale8;
+int pista[LINHA][COLUNA];
+int mover, lado = 0, cimaBaixo = 0, ladeira = 0, ladeira2 = 0, ladeira3 = 0, ladeira4 = 0, pontuacao = 0;
+int ale1, ale2, ale3, ale4, ale5, ale6, ale7, ale8;
 
 void gotoxy(int x, int y){
 
@@ -145,7 +147,10 @@ void movimentacao(){
 
     if(kbhit()){
 
-        mover = getch();
+
+    }
+
+     mover = getch();
 
         if(mover == 119){ //W
 
@@ -163,128 +168,127 @@ void movimentacao(){
 
             if(lado != COLUNA - 7) lado += 2;
         }
-    }
 }
 void carroUsuario(){
 
-    pista[65 - cimaBaixo][4 + lado] = 219;
-    pista[65 - cimaBaixo][6 + lado] = 219;
-    pista[64 - cimaBaixo][5 + lado] = 219;
-    pista[63 - cimaBaixo][4 + lado] = 219;
-    pista[63 - cimaBaixo][6 + lado] = 219;
-    pista[62 - cimaBaixo][5 + lado] = 219;
+    pista[65 - cimaBaixo][4 + lado] = USUARIO;
+    pista[65 - cimaBaixo][6 + lado] = USUARIO;
+    pista[64 - cimaBaixo][5 + lado] = USUARIO;
+    pista[63 - cimaBaixo][6 + lado] = USUARIO;
+    pista[63 - cimaBaixo][4 + lado] = USUARIO;
+    pista[62 - cimaBaixo][5 + lado] = USUARIO;
 }
 void oponente1(){
 
-    pista[0 + ladeira][1] = 219;
-    pista[1 + ladeira][0] = 219;
-    pista[1 + ladeira][2] = 219;
-    pista[2 + ladeira][1] = 219;
-    pista[3 + ladeira][0] = 219;
-    pista[3 + ladeira][2] = 219;
+    pista[0 + ladeira][1] = OPONENTE;
+    pista[1 + ladeira][0] = OPONENTE;
+    pista[1 + ladeira][2] = OPONENTE;
+    pista[2 + ladeira][1] = OPONENTE;
+    pista[3 + ladeira][0] = OPONENTE;
+    pista[3 + ladeira][2] = OPONENTE;
 
 }
 void oponente2(){
 
-    pista[0 + ladeira][5] = 219;
-    pista[1 + ladeira][4] = 219;
-    pista[1 + ladeira][6] = 219;
-    pista[2 + ladeira][5] = 219;
-    pista[3 + ladeira][4] = 219;
-    pista[3 + ladeira][6] = 219;
+    pista[0 + ladeira][5] = OPONENTE;
+    pista[1 + ladeira][4] = OPONENTE;
+    pista[1 + ladeira][6] = OPONENTE;
+    pista[2 + ladeira][5] = OPONENTE;
+    pista[3 + ladeira][4] = OPONENTE;
+    pista[3 + ladeira][6] = OPONENTE;
 }
 void oponente3(){
 
-    pista[0 + ladeira][9]  = 219;
-    pista[1 + ladeira][8]  = 219;
-    pista[1 + ladeira][10] = 219;
-    pista[2 + ladeira][9]  = 219;
-    pista[3 + ladeira][8]  = 219;
-    pista[3 + ladeira][10] = 219;
+    pista[0 + ladeira][9]  = OPONENTE;
+    pista[1 + ladeira][8]  = OPONENTE;
+    pista[1 + ladeira][10] = OPONENTE;
+    pista[2 + ladeira][9]  = OPONENTE;
+    pista[3 + ladeira][8]  = OPONENTE;
+    pista[3 + ladeira][10] = OPONENTE;
 }
 void oponente4(){
 
-    pista[13 + ladeira2][1] = 219;
-    pista[14 + ladeira2][0] = 219;
-    pista[14 + ladeira2][2] = 219;
-    pista[15 + ladeira2][1] = 219;
-    pista[16 + ladeira2][0] = 219;
-    pista[16 + ladeira2][2] = 219;
+    pista[13 + ladeira2][1] = OPONENTE;
+    pista[14 + ladeira2][0] = OPONENTE;
+    pista[14 + ladeira2][2] = OPONENTE;
+    pista[15 + ladeira2][1] = OPONENTE;
+    pista[16 + ladeira2][0] = OPONENTE;
+    pista[16 + ladeira2][2] = OPONENTE;
 
 }
 void oponente5(){
 
-    pista[13 + ladeira2][5] = 219;
-    pista[14 + ladeira2][4] = 219;
-    pista[14 + ladeira2][6] = 219;
-    pista[15 + ladeira2][5] = 219;
-    pista[16 + ladeira2][4] = 219;
-    pista[16 + ladeira2][6] = 219;
+    pista[13 + ladeira2][5] = OPONENTE;
+    pista[14 + ladeira2][4] = OPONENTE;
+    pista[14 + ladeira2][6] = OPONENTE;
+    pista[15 + ladeira2][5] = OPONENTE;
+    pista[16 + ladeira2][4] = OPONENTE;
+    pista[16 + ladeira2][6] = OPONENTE;
 }
 void oponente6(){
 
-    pista[13 + ladeira2][9]  = 219;
-    pista[14 + ladeira2][8]  = 219;
-    pista[14 + ladeira2][10] = 219;
-    pista[15 + ladeira2][9]  = 219;
-    pista[16 + ladeira2][8]  = 219;
-    pista[16 + ladeira2][10] = 219;
+    pista[13 + ladeira2][9]  = OPONENTE;
+    pista[14 + ladeira2][8]  = OPONENTE;
+    pista[14 + ladeira2][10] = OPONENTE;
+    pista[15 + ladeira2][9]  = OPONENTE;
+    pista[16 + ladeira2][8]  = OPONENTE;
+    pista[16 + ladeira2][10] = OPONENTE;
 }
 void oponente7(){
 
-    pista[26 + ladeira3][1] = 219;
-    pista[27 + ladeira3][0] = 219;
-    pista[27 + ladeira3][2] = 219;
-    pista[28 + ladeira3][1] = 219;
-    pista[29 + ladeira3][0] = 219;
-    pista[29 + ladeira3][2] = 219;
+    pista[26 + ladeira3][1] = OPONENTE;
+    pista[27 + ladeira3][0] = OPONENTE;
+    pista[27 + ladeira3][2] = OPONENTE;
+    pista[28 + ladeira3][1] = OPONENTE;
+    pista[29 + ladeira3][0] = OPONENTE;
+    pista[29 + ladeira3][2] = OPONENTE;
 
 }
 void oponente8(){
 
-    pista[26 + ladeira3][5] = 219;
-    pista[27 + ladeira3][4] = 219;
-    pista[27 + ladeira3][6] = 219;
-    pista[28 + ladeira3][5] = 219;
-    pista[29 + ladeira3][4] = 219;
-    pista[29 + ladeira3][6] = 219;
+    pista[26 + ladeira3][5] = OPONENTE;
+    pista[27 + ladeira3][4] = OPONENTE;
+    pista[27 + ladeira3][6] = OPONENTE;
+    pista[28 + ladeira3][5] = OPONENTE;
+    pista[29 + ladeira3][4] = OPONENTE;
+    pista[29 + ladeira3][6] = OPONENTE;
 }
 void oponente9(){
 
-    pista[26 + ladeira3][9]  = 219;
-    pista[27 + ladeira3][8]  = 219;
-    pista[27 + ladeira3][10] = 219;
-    pista[28 + ladeira3][9]  = 219;
-    pista[29 + ladeira3][8]  = 219;
-    pista[29 + ladeira3][10] = 219;
+    pista[26 + ladeira3][9]  = OPONENTE;
+    pista[27 + ladeira3][8]  = OPONENTE;
+    pista[27 + ladeira3][10] = OPONENTE;
+    pista[28 + ladeira3][9]  = OPONENTE;
+    pista[29 + ladeira3][8]  = OPONENTE;
+    pista[29 + ladeira3][10] = OPONENTE;
 }
 void oponente10(){
 
-    pista[39 + ladeira4][1] = 219;
-    pista[40 + ladeira4][0] = 219;
-    pista[40 + ladeira4][2] = 219;
-    pista[41 + ladeira4][1] = 219;
-    pista[42 + ladeira4][0] = 219;
-    pista[42 + ladeira4][2] = 219;
+    pista[39 + ladeira4][1] = OPONENTE;
+    pista[40 + ladeira4][0] = OPONENTE;
+    pista[40 + ladeira4][2] = OPONENTE;
+    pista[41 + ladeira4][1] = OPONENTE;
+    pista[42 + ladeira4][0] = OPONENTE;
+    pista[42 + ladeira4][2] = OPONENTE;
 
 }
 void oponente11(){
 
-    pista[39 + ladeira4][5] = 219;
-    pista[40 + ladeira4][4] = 219;
-    pista[40 + ladeira4][6] = 219;
-    pista[41 + ladeira4][5] = 219;
-    pista[42 + ladeira4][4] = 219;
-    pista[42 + ladeira4][6] = 219;
+    pista[39 + ladeira4][5] = OPONENTE;
+    pista[40 + ladeira4][4] = OPONENTE;
+    pista[40 + ladeira4][6] = OPONENTE;
+    pista[41 + ladeira4][5] = OPONENTE;
+    pista[42 + ladeira4][4] = OPONENTE;
+    pista[42 + ladeira4][6] = OPONENTE;
 }
 void oponente12(){
 
-    pista[39 + ladeira4][9]  = 219;
-    pista[40 + ladeira4][8]  = 219;
-    pista[40 + ladeira4][10] = 219;
-    pista[41 + ladeira4][9]  = 219;
-    pista[42 + ladeira4][8]  = 219;
-    pista[42 + ladeira4][10] = 219;
+    pista[39 + ladeira4][9]  = OPONENTE;
+    pista[40 + ladeira4][8]  = OPONENTE;
+    pista[40 + ladeira4][10] = OPONENTE;
+    pista[41 + ladeira4][9]  = OPONENTE;
+    pista[42 + ladeira4][8]  = OPONENTE;
+    pista[42 + ladeira4][10] = OPONENTE;
 }
 void carroAleatorio1(){
 
@@ -352,51 +356,51 @@ void imprimeOponente1(){
 }
 void imprimeOponente2(){
 
-    if(ale3 == 0){oponente4();
+    if(ale3 == 0){oponente6();
     }else if(ale3 == 1){oponente5();
-    }else{oponente6();}
+    }else{oponente4();}
 
-    if(ale4 == 0){oponente4();
+    if(ale4 == 0){oponente6();
     }else if(ale4 == 1){oponente5();
-    }else{oponente6();}
+    }else{oponente4();}
 }
 void imprimeOponente3(){
 
-    if(ale5 == 0){oponente7();
-    }else if(ale5 == 1){oponente8();
-    }else{oponente9();}
+    if(ale5 == 0){oponente8();
+    }else if(ale5 == 1){oponente9();
+    }else{oponente7();}
 
-    if(ale6 == 0){oponente7();
-    }else if(ale6 == 1){oponente8();
-    }else{oponente9();}
+    if(ale6 == 0){oponente8();
+    }else if(ale6 == 1){oponente9();
+    }else{oponente7();}
 }
 void imprimeOponente4(){
 
-    if(ale5 == 0){oponente10();
-    }else if(ale5 == 1){oponente11();
-    }else{oponente12();}
+    if(ale5 == 0){oponente12();
+    }else if(ale5 == 1){oponente10();
+    }else{oponente11();}
 
-    if(ale6 == 0){oponente10();
-    }else if(ale6 == 1){oponente11();
-    }else{oponente12();}
+    if(ale6 == 0){oponente12();
+    }else if(ale6 == 1){oponente10();
+    }else{oponente11();}
 }
 int colisao(){
 
-    int i, j;
+    int i, j, bateu = 1;
 
-    for(i = 10; i < LINHA - 6; i++){
+    for(i = 42; i < 66; i++){
         for(j = 0; j < COLUNA; j++){
 
-            printf("%c",pista[i][j]);
+            if(pista[i][j] == 219 && pista[i - 1][j] == 178) bateu = 0;
         }
-        puts(" ");
     }
+    return bateu;
 }
 void carregaPista(){
 
-    int i, j;
+    int i, j, x = 1;
 
-    for(i = 0; i < LINHA; i++)
+    for(i = 42; i < 66; i++)
         for(j = 0; j < COLUNA; j++) pista[i][j] = ' ';
 
 }
@@ -409,7 +413,7 @@ void imprime(){
 
             gotoxy(j + 36, (i - 42) + 1);
             wsol_fontcolor(0,8);
-            printf("%c",pista[i][j]);
+            printf("%c ",pista[i][j]);
         }
         puts(" ");
     }
@@ -527,7 +531,10 @@ int main(){
         carroUsuario();
         imprime();
         ponto();
+        colide = colisao();
         movimentacao();
+
+        if(!colide){break;}
 
         if(ladeira != 63){ladeira++;
         }else{ladeira = 0;}
