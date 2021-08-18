@@ -105,6 +105,8 @@ void lerPlacar(){
 
     int i, j, valor, valorfor;
 
+    tela();
+
     FILE *placar;
     placar = fopen("placar.txt", "r");
 
@@ -120,10 +122,12 @@ void lerPlacar(){
     for(i = 1; i != valorfor; i++){
         for(j = 0; j < 2; j++){
 
+            gotoxy(40,i + 10);
             printf("%d ",matriz[i][j]);
         }
         puts("");
     }
+    getch();
 }
 void ordenar(int matriz[][2], int cont){
 
@@ -428,10 +432,10 @@ void instrucao(){
             "\t\tTambem pode ser usadas as setas do teclado.\n"
             "\t\tO objetivo do JOGO eh passar a maior quantidade de tempo.\n\n");
 
-    gotoxy(0,20);
-
-    printf("\t\t\tJogar [1] ou Menu pricipal [0]\n");
-    printf("\t\t\tDigite a Opcao: ");
+    gotoxy(35,20);
+    printf("Menu pricipal [0]\n");
+    gotoxy(35,21);
+    printf("Digite a Opcao: ");
         scanf("%d",&opcao);
 
     return opcao;
@@ -489,6 +493,7 @@ void load(){
 
     for(i = 0; i < 10; i++){
 
+        sleep(1);
         printf("%c",219);
     }
 }
@@ -500,7 +505,7 @@ void sair(){
     printf("SAINDO ");
     load();
 }
-void carregando(){ //
+void carregando(){
 
     tela();
 
@@ -511,43 +516,78 @@ void carregando(){ //
 
 int main(){
 
-    int i, colide;
+    int i, j, colide, valor;
 
-    tela();
-    borda();
+    for(j = 1; j != 0; j++){
 
-    for(i = 1; i != 0; i++){
+        valor = menu();
 
-        Sleep(20);
-        carregaPista();
-        if(ladeira == 0) carroAleatorio1();
-        if(ladeira2 == 0) carroAleatorio2();
-        if(ladeira3 == 0) carroAleatorio3();
-        if(ladeira4 == 0) carroAleatorio4();
-        imprimeOponente1();
-        imprimeOponente2();
-        imprimeOponente3();
-        imprimeOponente4();
-        carroUsuario();
-        imprime();
-        ponto();
-        colide = colisao();
-        movimentacao();
+        switch(valor){
 
-        if(!colide){break;}
+            case 1:
 
-        if(ladeira != 63){ladeira++;
-        }else{ladeira = 0;}
+            tela();
+            borda();
 
-        if(ladeira2 != 63){ladeira2++;
-        }else{ladeira2 = 0;}
+            for(i = 1; i != 0; i++){
 
-        if(ladeira3 != 63){ladeira3++;
-        }else{ladeira3 = 0;}
+                Sleep(20);
+                carregaPista();
+                if(ladeira == 0) carroAleatorio1();
+                if(ladeira2 == 0) carroAleatorio2();
+                if(ladeira3 == 0) carroAleatorio3();
+                if(ladeira4 == 0) carroAleatorio4();
+                imprimeOponente1();
+                imprimeOponente2();
+                imprimeOponente3();
+                imprimeOponente4();
+                carroUsuario();
+                imprime();
+                ponto();
+                colide = colisao();
+                movimentacao();
 
-        if(ladeira4 != 63){ladeira4++;
-        }else{ladeira4 = 0;}
+                if(!colide){break;}
+
+                if(ladeira != 63){ladeira++;
+                }else{ladeira = 0;}
+
+                if(ladeira2 != 63){ladeira2++;
+                }else{ladeira2 = 0;}
+
+                if(ladeira3 != 63){ladeira3++;
+                }else{ladeira3 = 0;}
+
+                if(ladeira4 != 63){ladeira4++;
+                }else{ladeira4 = 0;}
+            }
+            break;
+
+            case 2:
+
+                lerPlacar();
+                break;
+
+            case 3:
+
+                tela();
+                instrucao();
+                break;
+
+            case 4:
+
+                sair();
+                j = -1;
+                break;
+        }
+
     }
+
+
+
+
+
+
 
     return 0;
 }
