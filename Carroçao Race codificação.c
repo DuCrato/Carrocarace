@@ -51,10 +51,6 @@ void tela(){
                 gotoxy(j, i);
                 printf("%c",219);
 
-            }else{
-
-                gotoxy(i, j);
-                printf(" ");
             }
         }
         puts("");
@@ -65,6 +61,7 @@ int menu(){
     int opcao;
 
     tela();
+
     gotoxy(0,3);
     printf("\t||||||||||\n"
            "\t||             ||      ||||||||  ||||||||  ||||||||   ||||||||      ||\n"
@@ -79,9 +76,15 @@ int menu(){
            "\t\t\t\t\t ||||||      ||||||   ||       ||||||||\n"
            "\t\t\t\t\t ||    ||   ||    ||  ||       ||\n"
            "\t\t\t\t\t ||    ||  ||      || |||||||| ||||||||\n\n");
-
-    printf("\t\t\t\t\t1 - Novo Jogo\n\t\t\t\t\t2 - Placar\n\t\t\t\t\t3 - Instrucoes\n\t\t\t\t\t4 - Sair\n\n");
-    printf("\t\t\t\t\tDigite a opcao: ");
+    gotoxy(36,19);
+    printf("1 - Novo Jogo");
+    gotoxy(37,20);
+    printf("2 - Placar");
+    gotoxy(38,21);
+    printf("3 - Instrucoes");
+    gotoxy(39,22);
+    printf("4 - Sair");
+    gotoxy(36,23);
         scanf("%d",&opcao);
 
     return opcao;
@@ -103,58 +106,48 @@ void placar(){
 }
 void lerPlacar(){
 
-    int i, j, valor, valorfor;
+    int i, j = 0, tamanho;
 
     tela();
 
     FILE *placar;
     placar = fopen("placar.txt", "r");
 
-    fscanf(placar,"%d %d",&valor, &valorfor);
+    //ordenar(vetor, tamanho);
 
-    int matriz[valorfor][2];
+   // for(i = 1; i != tamanho; i++){
+    //    for(j = 0; j < 2; j++){
 
-    for(i = 1; i < valorfor; i++)
-        for(j = 0; j < 2; j++)fscanf(placar,"%d",&matriz[i][j]);
-
-    ordenar(matriz, valorfor);
-
-    for(i = 1; i != valorfor; i++){
-        for(j = 0; j < 2; j++){
-
-            gotoxy(40,i + 10);
-            printf("%d ",matriz[i][j]);
-        }
-        puts("");
-    }
+      //      gotoxy(40,i + 10);
+        //    printf("%d ",vetor[i]);
+       // }
+       // puts("");
+   // }
     getch();
 }
-void ordenar(int matriz[][2], int cont){
+/*void ordenar(int vetor, int cont){
 
     int i, j, aux, help;
 
-    for(i = 1; i < cont; i++){
+    for(i = 0; i < cont; i++){
 
-        for(j = 1 + i - 1; j < cont; j++){
-             if(aux < matriz [j][1]){
+        for(j = 0 + i - 1; j < cont; j++){
+             if(aux < vetor[j]){
 
-                aux = matriz[j][1];
+                aux = vetor[j];
                 help = j;
             }
         }
-        matriz[help][1] = matriz[i][1];
-        matriz[i][1] = aux;
+        vetor[help] = vetor[i];
+        vetor[i] = aux;
         aux = 0;
     }
-}
+}*/
 void movimentacao(){
 
     if(kbhit()){
 
-
-    }
-
-     mover = getch();
+        mover = getch();
 
         if(mover == 119){ //W
 
@@ -172,6 +165,8 @@ void movimentacao(){
 
             if(lado != COLUNA - 7) lado += 2;
         }
+
+    }
 }
 void carroUsuario(){
 
@@ -390,15 +385,27 @@ void imprimeOponente4(){
 }
 int colisao(){
 
-    int i, j, bateu = 1;
+    int i, j, bateu = 0;
 
     for(i = 42; i < 66; i++){
         for(j = 0; j < COLUNA; j++){
 
-            if(pista[i][j] == 219 && pista[i - 1][j] == 178) bateu = 0;
+            if(pista[i][j] == 219 && pista[i - 1][j] == 178) bateu = 1;
         }
     }
     return bateu;
+}
+void fimCorrida(){
+
+    ladeira  = 0;
+    ladeira2 = 0;
+    ladeira3 = 0;
+    ladeira4 = 0;
+
+    cimaBaixo = 0;
+    lado = 0;
+
+
 }
 void carregaPista(){
 
@@ -424,8 +431,6 @@ void imprime(){
 }
 void instrucao(){
 
-    int opcao;
-
     gotoxy(0,8);
 
     printf("\n\n\t\tTeclas para movimentacao W, A, S e M.\n"
@@ -433,12 +438,9 @@ void instrucao(){
             "\t\tO objetivo do JOGO eh passar a maior quantidade de tempo.\n\n");
 
     gotoxy(35,20);
-    printf("Menu pricipal [0]\n");
-    gotoxy(35,21);
-    printf("Digite a Opcao: ");
-        scanf("%d",&opcao);
+    printf("Qualquer teclas para SAIR\n");
+    getch();
 
-    return opcao;
 }
 void borda(){
 
@@ -504,6 +506,8 @@ void sair(){
     gotoxy(30,12);
     printf("SAINDO ");
     load();
+    gotoxy(0,30);
+
 }
 void carregando(){
 
@@ -516,7 +520,7 @@ void carregando(){
 
 int main(){
 
-    int i, j, colide, valor;
+    int i, j, colide, valor, menos;
 
     for(j = 1; j != 0; j++){
 
@@ -527,11 +531,15 @@ int main(){
             case 1:
 
             tela();
+            carregando();
             borda();
+
+            pontuacao = 0;
+            menos = 0;
 
             for(i = 1; i != 0; i++){
 
-                Sleep(20);
+                Sleep(200 - menos);
                 carregaPista();
                 if(ladeira == 0) carroAleatorio1();
                 if(ladeira2 == 0) carroAleatorio2();
@@ -547,7 +555,18 @@ int main(){
                 colide = colisao();
                 movimentacao();
 
-                if(!colide){break;}
+                if(pontuacao % 10 == 0 && menos < 170){
+
+                    menos += 10;
+                    printf("Menos = %d",menos);
+                }
+
+                if(colide){
+
+                    fimCorrida();
+                    sleep(2);
+
+                    break;}
 
                 if(ladeira != 63){ladeira++;
                 }else{ladeira = 0;}
