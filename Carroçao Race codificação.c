@@ -99,10 +99,9 @@ void ponto(){
 }
 void placar(){
 
-    FILE *placar;
-    placar = fopen("Placar.txt","w");
-    fprintf(placar, "20 30 40");
-    fclose(placar);
+    FILE *arquivo;
+    arquivo = fopen("Placar.txt","w");
+    fclose(arquivo);
 }
 void lerPlacar(){
 
@@ -110,8 +109,8 @@ void lerPlacar(){
 
     tela();
 
-    FILE *placar;
-    placar = fopen("placar.txt", "r");
+    FILE *arquivo;
+    arquivo = fopen("placar.txt", "r");
 
     //ordenar(vetor, tamanho);
 
@@ -165,7 +164,6 @@ void movimentacao(){
 
             if(lado != COLUNA - 7) lado += 2;
         }
-
     }
 }
 void carroUsuario(){
@@ -395,7 +393,7 @@ int colisao(){
     }
     return bateu;
 }
-void fimCorrida(){
+void fimCorrida(int pontoSave){
 
     ladeira  = 0;
     ladeira2 = 0;
@@ -405,6 +403,23 @@ void fimCorrida(){
     cimaBaixo = 0;
     lado = 0;
 
+    gotoxy(60,13);
+    printf("Sua Pontua%c%co = %d",135, 132, pontoSave);
+    Sleep(15);
+
+    FILE *arquivo;
+    arquivo = fopen("Placar.txt","a");
+
+    if(arquivo == NULL){
+
+        placar();
+
+        gotoxy(60,14);
+        printf("Pontua%c%co n%o salva",135, 132, 132);
+    }
+
+    fprintf(arquivo, "");
+    fclose(arquivo);
 
 }
 void carregaPista(){
@@ -520,7 +535,7 @@ void carregando(){
 
 int main(){
 
-    int i, j, colide, valor, menos;
+    int i, j, colide, valor, menos, pontoFinal;
 
     for(j = 1; j != 0; j++){
 
@@ -530,57 +545,55 @@ int main(){
 
             case 1:
 
-            tela();
-            carregando();
-            borda();
+                tela();
+                carregando();
+                borda();
 
-            pontuacao = 0;
-            menos = 0;
+                pontuacao = 0;
+                menos = 0;
 
-            for(i = 1; i != 0; i++){
+                for(i = 1; i != 0; i++){
 
-                Sleep(200 - menos);
-                carregaPista();
-                if(ladeira == 0) carroAleatorio1();
-                if(ladeira2 == 0) carroAleatorio2();
-                if(ladeira3 == 0) carroAleatorio3();
-                if(ladeira4 == 0) carroAleatorio4();
-                imprimeOponente1();
-                imprimeOponente2();
-                imprimeOponente3();
-                imprimeOponente4();
-                carroUsuario();
-                imprime();
-                ponto();
-                colide = colisao();
-                movimentacao();
+                    Sleep(200 - menos);
+                    carregaPista();
+                    if(ladeira == 0) carroAleatorio1();
+                    if(ladeira2 == 0) carroAleatorio2();
+                    if(ladeira3 == 0) carroAleatorio3();
+                    if(ladeira4 == 0) carroAleatorio4();
+                    imprimeOponente1();
+                    imprimeOponente2();
+                    imprimeOponente3();
+                    imprimeOponente4();
+                    carroUsuario();
+                    imprime();
+                    ponto();
+                    colide = colisao();
+                    movimentacao();
 
-                if(pontuacao % 10 == 0 && menos < 170){
+                    if(pontuacao % 10 == 0 && menos < 175)menos += 5;
 
-                    menos += 10;
-                    printf("Menos = %d",menos);
+                    if(colide){
+
+                        pontoFinal = pontuacao;
+                        fimCorrida(pontoFinal);
+                        sleep(2);
+
+                        break;
+                    }
+
+                    if(ladeira != 63){ladeira++;
+                    }else{ladeira = 0;}
+
+                    if(ladeira2 != 63){ladeira2++;
+                    }else{ladeira2 = 0;}
+
+                    if(ladeira3 != 63){ladeira3++;
+                    }else{ladeira3 = 0;}
+
+                    if(ladeira4 != 63){ladeira4++;
+                    }else{ladeira4 = 0;}
                 }
-
-                if(colide){
-
-                    fimCorrida();
-                    sleep(2);
-
-                    break;}
-
-                if(ladeira != 63){ladeira++;
-                }else{ladeira = 0;}
-
-                if(ladeira2 != 63){ladeira2++;
-                }else{ladeira2 = 0;}
-
-                if(ladeira3 != 63){ladeira3++;
-                }else{ladeira3 = 0;}
-
-                if(ladeira4 != 63){ladeira4++;
-                }else{ladeira4 = 0;}
-            }
-            break;
+                break;
 
             case 2:
 
@@ -599,14 +612,6 @@ int main(){
                 j = -1;
                 break;
         }
-
     }
-
-
-
-
-
-
-
     return 0;
 }
