@@ -13,8 +13,7 @@
 
 int pista[LINHA][COLUNA];
 int mover, lado = 0, cimaBaixo = 0, ladeira = 0, ladeira2 = 0, ladeira3 = 0, ladeira4 = 0, pontuacao = 0;
-int ale1, ale2, ale3, ale4, ale5, ale6, ale7, ale8;
-
+int ale1, ale2, ale3, ale4;
 void gotoxy(int x, int y){
 
     COORD coord;
@@ -313,34 +312,6 @@ void carroAleatorio2(){
         if(ale3 != ale4) break;
     }
 }
-void carroAleatorio3(){
-
-    int i;
-
-    srand(time(NULL));
-
-    for(i = 1; i != 0; i++){
-
-        ale5 = rand() % 3;
-        ale6 = rand() % 3;
-
-        if(ale5 != ale6) break;
-    }
-}
-void carroAleatorio4(){
-
-    int i;
-
-    srand(time(NULL));
-
-    for(i = 1; i != 0; i++){
-
-        ale7 = rand() % 3;
-        ale8 = rand() % 3;
-
-        if(ale7 != ale8) break;
-    }
-}
 void imprimeOponente1(){
 
     if(ale1 == 0){oponente1();
@@ -353,32 +324,32 @@ void imprimeOponente1(){
 }
 void imprimeOponente2(){
 
-    if(ale3 == 0){oponente6();
-    }else if(ale3 == 1){oponente5();
+    if(ale1 == 0){oponente6();
+    }else if(ale1 == 1){oponente5();
     }else{oponente4();}
 
-    if(ale4 == 0){oponente6();
-    }else if(ale4 == 1){oponente5();
+    if(ale2 == 0){oponente6();
+    }else if(ale2 == 1){oponente5();
     }else{oponente4();}
 }
 void imprimeOponente3(){
 
-    if(ale5 == 0){oponente8();
-    }else if(ale5 == 1){oponente9();
+    if(ale3 == 0){oponente8();
+    }else if(ale3 == 1){oponente9();
     }else{oponente7();}
 
-    if(ale6 == 0){oponente8();
-    }else if(ale6 == 1){oponente9();
+    if(ale4 == 0){oponente8();
+    }else if(ale4 == 1){oponente9();
     }else{oponente7();}
 }
 void imprimeOponente4(){
 
-    if(ale5 == 0){oponente12();
-    }else if(ale5 == 1){oponente10();
+    if(ale3 == 0){oponente12();
+    }else if(ale3 == 1){oponente10();
     }else{oponente11();}
 
-    if(ale6 == 0){oponente12();
-    }else if(ale6 == 1){oponente10();
+    if(ale4 == 0){oponente12();
+    }else if(ale4 == 1){oponente10();
     }else{oponente11();}
 }
 int colisao(){
@@ -554,12 +525,10 @@ int main(){
 
                 for(i = 1; i != 0; i++){
 
-                    Sleep(200 - menos);
+                    Sleep(10);
                     carregaPista();
                     if(ladeira == 0) carroAleatorio1();
                     if(ladeira2 == 0) carroAleatorio2();
-                    if(ladeira3 == 0) carroAleatorio3();
-                    if(ladeira4 == 0) carroAleatorio4();
                     imprimeOponente1();
                     imprimeOponente2();
                     imprimeOponente3();
@@ -580,7 +549,6 @@ int main(){
 
                         break;
                     }
-
                     if(ladeira != 63){ladeira++;
                     }else{ladeira = 0;}
 
