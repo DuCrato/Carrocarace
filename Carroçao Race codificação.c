@@ -570,7 +570,7 @@ int main(){
             case 1:
 
                 tela();
-                //carregando();
+                carregando();
                 borda();
 
                 pontuacao = 0;
