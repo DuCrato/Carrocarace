@@ -12,7 +12,7 @@
 #define OPONENTE 178
 
 int pista[LINHA][COLUNA];
-int mover, lado = 0, cimaBaixo = 0, ladeira = 0, ladeira2 = 0, ladeira3 = 0, ladeira4 = 0, pontuacao = 0;
+int mover, lado = 0, cimaBaixo = 0, ladeira = 0, ladeira2 = 0, ladeira3 = 0, ladeira4 = 0, pontuacao;
 int ale1, ale2, ale3, ale4;
 void gotoxy(int x, int y){
 
@@ -88,59 +88,111 @@ int menu(){
 
     return opcao;
 }
-void ponto(){
-
-    pontuacao++;
-
-    gotoxy(8,13);
-    wsol_fontcolor(WSOL_WHITE,WSOL_BLACK);
-    printf("Pontua%c%co: %d",135, 198, pontuacao);
-}
-void placar(){
+void criarPlacar(){
 
     FILE *arquivo;
-    arquivo = fopen("Placar.txt","w");
+
+    if((arquivo = fopen("Placar.txt", "w")) == NULL){
+
+        printf("Arquivo nao pode ser criado");
+        exit(1);
+    }
     fclose(arquivo);
 }
 void lerPlacar(){
 
-    int i, j = 0, tamanho;
+    int contador = 0, percorrer = 0;
+
+    FILE *arquivo;
+
+    if((arquivo = fopen("Placar.txt", "r")) == NULL){
+
+        printf("Arquivo nao encontrado");
+        criarPlacar();
+        exit(1);
+    }
+    while((percorrer = fgetc(arquivo)) != EOF){
+
+        if(percorrer == '\n') contador++;
+    }
+    fclose(arquivo);
+
+    encheVetor(contador);
+}
+void encheVetor(int tamanho){
+
+    int vetor[tamanho], i = 0, valor;
+
+    FILE *arquivo;
+
+    if((arquivo = fopen("Placar.txt", "r")) == NULL){
+
+        printf("Arquivo nao encontrado!!!");
+        exit(1);
+    }
+
+    while(fscanf(arquivo, "%d", &valor) != EOF){
+
+        vetor[i] = valor;
+        i++;
+    }
+    fclose(arquivo);
+    ordenar(vetor, tamanho);
+}
+void ordenar(int vetor[], int tam){
+
+    int i, j, aux, temp = 0;
+
+    for(i = 0; i < tam; i++){
+        for(j = i; j < tam; j++){
+
+            if(temp < vetor[j]){
+
+                temp = vetor[j];
+                aux = j;
+            }
+        }
+        vetor[aux] = vetor[i];
+        vetor[i] = temp;
+        temp = 0;
+    }
 
     tela();
 
-    FILE *arquivo;
-    arquivo = fopen("placar.txt", "r");
+    for(i = 0; i < tam; i++){
 
-    //ordenar(vetor, tamanho);
+        if(i != 12){
 
-   // for(i = 1; i != tamanho; i++){
-    //    for(j = 0; j < 2; j++){
-
-      //      gotoxy(40,i + 10);
-        //    printf("%d ",vetor[i]);
-       // }
-       // puts("");
-   // }
-    getch();
-}
-/*void ordenar(int vetor, int cont){
-
-    int i, j, aux, help;
-
-    for(i = 0; i < cont; i++){
-
-        for(j = 0 + i - 1; j < cont; j++){
-             if(aux < vetor[j]){
-
-                aux = vetor[j];
-                help = j;
-            }
-        }
-        vetor[help] = vetor[i];
-        vetor[i] = aux;
-        aux = 0;
+            gotoxy(40,10 + i);
+            printf("%d - %d\n",i + 1, vetor[i]);
+        }else{break;}
     }
-}*/
+    gotoxy(30,23);
+    system("pause");
+}
+void inserirPlacar(int valor){
+
+    FILE *arquivo;
+
+    if((arquivo = fopen("Placar.txt", "a")) == NULL){
+
+        printf("Arquivo nao encontrado");
+        exit(1);
+    }else{
+
+        fprintf(arquivo, "%d\n", valor);
+    }
+
+    fclose(arquivo);
+}
+void ponto(){
+
+    gotoxy(5,13);
+    wsol_fontcolor(WSOL_WHITE,WSOL_BLACK);
+    printf("Pontua%c%co = %d",135, 132, pontuacao);
+    pontuacao++;
+
+}
 void movimentacao(){
 
     if(kbhit()){
@@ -375,6 +427,7 @@ void fimCorrida(int pontoSave){
     lado = 0;
 
     gotoxy(60,13);
+    wsol_fontcolor(WSOL_WHITE,WSOL_BLACK);
     printf("Sua Pontua%c%co = %d",135, 132, pontoSave);
     Sleep(15);
 
@@ -383,15 +436,15 @@ void fimCorrida(int pontoSave){
 
     if(arquivo == NULL){
 
-        placar();
+        criarPlacar();
 
         gotoxy(60,14);
         printf("Pontua%c%co n%o salva",135, 132, 132);
+    }else{
+
+        inserirPlacar(pontoSave);
     }
-
-    fprintf(arquivo, "");
     fclose(arquivo);
-
 }
 void carregaPista(){
 
@@ -517,7 +570,7 @@ int main(){
             case 1:
 
                 tela();
-                carregando();
+                //carregando();
                 borda();
 
                 pontuacao = 0;
@@ -525,7 +578,7 @@ int main(){
 
                 for(i = 1; i != 0; i++){
 
-                    Sleep(10);
+                    Sleep(200 - menos);
                     carregaPista();
                     if(ladeira == 0) carroAleatorio1();
                     if(ladeira2 == 0) carroAleatorio2();
@@ -535,16 +588,15 @@ int main(){
                     imprimeOponente4();
                     carroUsuario();
                     imprime();
-                    ponto();
                     colide = colisao();
+                    ponto();
                     movimentacao();
 
-                    if(pontuacao % 10 == 0 && menos < 175)menos += 5;
+                    if(pontuacao % 10 == 0 && menos < 190)menos += 10;
 
                     if(colide){
 
-                        pontoFinal = pontuacao;
-                        fimCorrida(pontoFinal);
+                        fimCorrida(pontuacao);
                         sleep(2);
 
                         break;
