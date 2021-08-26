@@ -88,103 +88,6 @@ int menu(){
 
     return opcao;
 }
-void criarPlacar(){
-
-    FILE *arquivo;
-
-    if((arquivo = fopen("Placar.txt", "w")) == NULL){
-
-        printf("Arquivo nao pode ser criado");
-        exit(1);
-    }
-    fclose(arquivo);
-}
-void lerPlacar(){
-
-    int contador = 0, percorrer = 0;
-
-    FILE *arquivo;
-
-    if((arquivo = fopen("Placar.txt", "r")) == NULL){
-
-        printf("Arquivo nao encontrado");
-        criarPlacar();
-        exit(1);
-    }
-    while((percorrer = fgetc(arquivo)) != EOF){
-
-        if(percorrer == '\n') contador++;
-    }
-    fclose(arquivo);
-
-    encheVetor(contador);
-}
-void encheVetor(int tamanho){
-
-    int vetor[tamanho], i = 0, valor;
-
-    FILE *arquivo;
-
-    if((arquivo = fopen("Placar.txt", "r")) == NULL){
-
-        printf("Arquivo nao encontrado!!!");
-        exit(1);
-    }
-
-    while(fscanf(arquivo, "%d", &valor) != EOF){
-
-        vetor[i] = valor;
-        i++;
-    }
-    fclose(arquivo);
-    ordenar(vetor, tamanho);
-}
-void ordenar(int vetor[], int tam){
-
-    int i, j, aux, temp = 0;
-
-    for(i = 0; i < tam; i++){
-        for(j = i; j < tam; j++){
-
-            if(temp < vetor[j]){
-
-                temp = vetor[j];
-                aux = j;
-            }
-        }
-        vetor[aux] = vetor[i];
-        vetor[i] = temp;
-        temp = 0;
-    }
-
-    tela();
-
-    for(i = 0; i < tam; i++){
-
-        if(i != 12){
-
-            gotoxy(40,10 + i);
-            printf("%d - %d\n",i + 1, vetor[i]);
-        }else{break;}
-    }
-    gotoxy(30,23);
-    system("pause");
-}
-void inserirPlacar(int valor){
-
-    FILE *arquivo;
-
-    if((arquivo = fopen("Placar.txt", "a")) == NULL){
-
-        printf("Arquivo nao encontrado");
-        exit(1);
-    }else{
-
-        fprintf(arquivo, "%d\n", valor);
-    }
-
-    fclose(arquivo);
-}
 void ponto(){
 
     gotoxy(5,13);
@@ -468,6 +371,103 @@ void imprime(){
         puts(" ");
     }
 }
+void criarPlacar(){
+
+    FILE *arquivo;
+
+    if((arquivo = fopen("Placar.txt", "w")) == NULL){
+
+        printf("Arquivo nao pode ser criado");
+        exit(1);
+    }
+    fclose(arquivo);
+}
+void lerPlacar(){
+
+    int contador = 0, percorrer = 0;
+
+    FILE *arquivo;
+
+    if((arquivo = fopen("Placar.txt", "r")) == NULL){
+
+        printf("Arquivo nao encontrado");
+        criarPlacar();
+        exit(1);
+    }
+    while((percorrer = fgetc(arquivo)) != EOF){
+
+        if(percorrer == '\n') contador++;
+    }
+    fclose(arquivo);
+
+    encheVetor(contador);
+}
+void encheVetor(int tamanho){
+
+    int vetor[tamanho], i = 0, valor;
+
+    FILE *arquivo;
+
+    if((arquivo = fopen("Placar.txt", "r")) == NULL){
+
+        printf("Arquivo nao encontrado!!!");
+        exit(1);
+    }
+
+    while(fscanf(arquivo, "%d", &valor) != EOF){
+
+        vetor[i] = valor;
+        i++;
+    }
+    fclose(arquivo);
+    ordenar(vetor, tamanho);
+}
+void ordenar(int vetor[], int tam){
+
+    int i, j, aux, temp = 0;
+
+    for(i = 0; i < tam; i++){
+        for(j = i; j < tam; j++){
+
+            if(temp < vetor[j]){
+
+                temp = vetor[j];
+                aux = j;
+            }
+        }
+        vetor[aux] = vetor[i];
+        vetor[i] = temp;
+        temp = 0;
+    }
+
+    tela();
+
+    for(i = 0; i < tam; i++){
+
+        if(i != 12){
+
+            gotoxy(40,10 + i);
+            printf("%d - %d\n",i + 1, vetor[i]);
+        }else{break;}
+    }
+    gotoxy(30,23);
+    system("pause");
+}
+void inserirPlacar(int valor){
+
+    FILE *arquivo;
+
+    if((arquivo = fopen("Placar.txt", "a")) == NULL){
+
+        printf("Arquivo nao encontrado");
+        exit(1);
+    }else{
+
+        fprintf(arquivo, "%d\n", valor);
+    }
+
+    fclose(arquivo);
+}
 void instrucao(){
 
     gotoxy(0,8);
@@ -526,7 +526,6 @@ void imprimiBorda(char beira[][BORDAJ]){
         }
         puts(" ");
     }
-
 }
 void load(){
 
